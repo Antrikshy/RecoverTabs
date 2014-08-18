@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+
+<script type='text/javascript'>
+
+// Place to store URLs of closed tabs
+var closedTabURLs = [];
+
+// Event listens to close-tab signals from Safari and saves URL of target tab
+safari.application.addEventListener("close", function (e) {
+    toSaveURL = e.target.url;
+
+    // Makes sure target is a tab, closedTabURLs doesn't already have a duplicate
+    // Also checks if the URL is "" (seems to happen when you close a not-fully-loaded page) or undefined (no URL)
+    if (e.target instanceof SafariBrowserTab && !(closedTabURLs.indexOf(toSaveURL) > -1) && toSaveURL !== "" && toSaveURL !== undefined)
+        closedTabURLs.push(toSaveURL);
+}, true);
+
+// Listens to message from injected keyboardShortcutHandler.js
+safari.application.addEventListener('message', handleMessage, false);
+// Message gets caught, reopenClosedTabs() gets called
+function handleMessage(msg) {
+    if (msg.name == 'reopenTab') {
+        reopenClosedTabs();
+    }
+}
+
+// This does all the heavy-work of reopening
+var reopenClosedTabs = function(){
+    // Loop calculates index of activeTab
+    var active = safari.application.activeBrowserWindow.activeTab;
+    var tabs = safari.application.activeBrowserWindow.tabs;
+    for (var index = 0; index < tabs.length; index++) {
+        if (tabs[index] == active)
+            break;
+    }
+
+    // This reopens tabs, clearing out saved URLs as they are reopened
+    if (closedTabURLs.length > 0) {
+        var reopenURL = closedTabURLs.pop();
+        // New tab is placed after activeTab, using index
+        var newTab = safari.application.activeBrowserWindow.openTab('foreground', index + 1);
+        newTab.url = reopenURL;
+    }
+}
+
+</script>
+
+</head>
+</html>
