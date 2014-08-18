@@ -20,9 +20,18 @@ function handleMessage(msg) {
 }
 
 var reopenClosedTabs = function(){
+    var active = safari.application.activeBrowserWindow.activeTab;
+    var tabs = safari.application.activeBrowserWindow.tabs;
+
+    // var index = 0;
+    for (var index = 0; index < tabs.length; index++) {
+        if (tabs[index] == active)
+            break;
+    }
+
     if (closedTabURLs.length > 0) {
         var reopenURL = closedTabURLs.pop();
-        var newTab = safari.application.activeBrowserWindow.openTab();
+        var newTab = safari.application.activeBrowserWindow.openTab('foreground', index + 1);
         newTab.url = reopenURL;
     }
 }
