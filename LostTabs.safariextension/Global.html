@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+
+<script type='text/javascript'>
+
+var closedTabURLs = [];
+
+safari.application.addEventListener("close", function (e) {
+    if (e.target instanceof SafariBrowserTab)
+        closedTabURLs.push(e.target.url);
+}, true);
+
+safari.application.addEventListener('message', handleMessage, false);
+
+function handleMessage(msg) {
+    if (msg.name == 'reopenTab') {
+        reopenClosedTabs();
+    }
+}
+
+var reopenClosedTabs = function(){
+    if (closedTabURLs.length > 0) {
+        var reopenURL = closedTabURLs.pop();
+        var newTab = safari.application.activeBrowserWindow.openTab();
+        newTab.url = reopenURL;
+    }
+}
+
+</script>
+
+</head>
+</html>
