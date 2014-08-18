@@ -40,7 +40,7 @@ var reopenClosedTabs = function(){
     if (closedTabURLs.length > 0) {
         var reopenURL = closedTabURLs.pop();
         // New tab is placed after activeTab, using index
-        var newTab = safari.application.activeBrowserWindow.openTab('foreground', index + 1);
+        var newTab = safari.application.activeBrowserWindow.openTab('background', index + 1);
         newTab.url = reopenURL;
     }
 }

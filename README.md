@@ -17,7 +17,6 @@ Clone the repo, add the .safariextension folder to your extension builder, make 
 
 Currently, the following improvements would be nice:
 * Sometimes, the tab bar gets hidden when only one tab is open. Cmd+Shift+T is reserved for hiding and showing the tab bar.
-* The extension does not behave like a native feature. It is slow. Keyboard shortcut only works when a page is open because an injected script handles the shortcut.
 * Add a way to prevent reopening of a tab if the same URL is open in another tab.
 * Add a limit to number of saved URLs to prevent memory leaks in long browsing sessions. Purge first-in contents of the array as it grows.
 * Extension malfunctions if tab reopened and closed rapidly.
