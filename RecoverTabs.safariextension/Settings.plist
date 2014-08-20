@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>DefaultValue</key>
+		<string>background</string>
+		<key>FalseValue</key>
+		<string>background</string>
+		<key>Key</key>
+		<string>tabOpenStyle</string>
+		<key>Title</key>
+		<string>Tabs open in</string>
+		<key>Titles</key>
+		<array>
+			<string>background</string>
+			<string>foreground (slight lag when opening multiple)</string>
+		</array>
+		<key>TrueValue</key>
+		<string>foreground</string>
+		<key>Type</key>
+		<string>RadioButtons</string>
+		<key>Values</key>
+		<array>
+			<string>background</string>
+			<string>foreground</string>
+		</array>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<real>20</real>
+		<key>Key</key>
+		<string>maxClosedTabs</string>
+		<key>MaximumValue</key>
+		<real>70</real>
+		<key>MinimumValue</key>
+		<real>10</real>
+		<key>StepValue</key>
+		<real>5</real>
+		<key>Title</key>
+		<string>Saved tab limit</string>
+		<key>Titles</key>
+		<array>
+			<string>10</string>
+			<string>20</string>
+			<string>30</string>
+			<string>40</string>
+			<string>No limit</string>
+		</array>
+		<key>Type</key>
+		<string>ListBox</string>
+		<key>Values</key>
+		<array>
+			<real>1</real>
+			<real>2</real>
+			<real>3</real>
+			<real>40</real>
+			<real>-1</real>
+		</array>
+	</dict>
+</array>
+</plist>

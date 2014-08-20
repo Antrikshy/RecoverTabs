@@ -3,9 +3,18 @@
 <head>
 
 <script type='text/javascript'>
+// TODO:
+// Add option to open in foreground
+// Add option to change number of tabs
+// Store title data, create toolbar button
+// Can toolbar button be optional?
 
 // Place to store URLs of closed tabs
 var closedTabURLs = [];
+// Maximum number of closed tab URLs to keep in memory
+var maxClosedTabs = 30;
+// Gets setting values from extension preferences in Safari's Preferences (created in Extension Builder)
+var tabOpenStyle = safari.extension.settings.tabOpenStyle;
 
 // Event listens to close-tab signals from Safari and saves URL of target tab
 safari.application.addEventListener("close", function (e) {
@@ -15,35 +24,45 @@ safari.application.addEventListener("close", function (e) {
     // Also checks if the URL is "" (seems to happen when you close a not-fully-loaded page) or undefined (no URL)
     if (e.target instanceof SafariBrowserTab && !(closedTabURLs.indexOf(toSaveURL) > -1) && toSaveURL !== "" && toSaveURL !== undefined)
         closedTabURLs.push(toSaveURL);
+
+    // Purges earliest tabs if saved number of tabs goes over maxClosedTabs (to prevent memory leaks in extended browsing sessions)
+    if (closedTabURLs.length > maxClosedTabs)
+        closedTabURLs.shift();
 }, true);
 
-// Listens to message from injected keyboardShortcutHandler.js
-safari.application.addEventListener('message', handleMessage, false);
-// Message gets caught, reopenClosedTabs() gets called
-function handleMessage(msg) {
-    if (msg.name == 'reopenTab') {
-        reopenClosedTabs();
-    }
-}
-
 // This does all the heavy-work of reopening
-var reopenClosedTabs = function(){
-    // Loop calculates index of activeTab
-    var active = safari.application.activeBrowserWindow.activeTab;
-    var tabs = safari.application.activeBrowserWindow.tabs;
-    for (var index = 0; index < tabs.length; index++) {
-        if (tabs[index] == active)
-            break;
-    }
+function reopenClosedTabs() {
+    // Gets index of activeTab so tabs can be reopened next to it
+    var index = safari.application.activeBrowserWindow.tabs.indexOf(safari.application.activeBrowserWindow.activeTab);
 
     // This reopens tabs, clearing out saved URLs as they are reopened
     if (closedTabURLs.length > 0) {
         var reopenURL = closedTabURLs.pop();
         // New tab is placed after activeTab, using index
-        var newTab = safari.application.activeBrowserWindow.openTab('background', index + 1);
+        var newTab = safari.application.activeBrowserWindow.openTab(tabOpenStyle, index + 1);
         newTab.url = reopenURL;
     }
 }
+
+// Message gets caught, reopenClosedTabs() gets called
+function handleKeyboardMessage(e) {
+    if (e.name == 'reopenTab')
+        reopenClosedTabs();
+}
+
+// Gets called when Safari sends a 'change' message
+function updateSettings(e) {
+    if (e.key == 'tabOpenStyle')
+        tabOpenStyle = e.newValue;
+}
+
+ 
+// Listeners for signals from outside this file  -------------------------------------
+
+// Listens to message from injected keyboardShortcutHandler.js
+safari.application.addEventListener('message', handleKeyboardMessage, false);
+// Listens to changes in settings
+safari.extension.settings.addEventListener('change', updateSettings, false);
 
 </script>
 

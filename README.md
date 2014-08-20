@@ -27,3 +27,11 @@ Currently, the following improvements would be nice:
 * Add a way to prevent reopening of a tab if the same URL is open in another tab.
 * Add a limit to number of saved URLs to prevent memory leaks in long browsing sessions. Purge first-in contents of the array as it grows.
 * Extension malfunctions if tab reopened and closed rapidly.
+
+Report Issues
+-------------
+If you run into any problems with this extension, write in the Issues for this repo (in the right sidebar) or [message /u/Antrikshy](http://www.reddit.com/message/compose/?to=Antrikshy) on reddit.
+
+Changelog
+---------
+See [Releases](http://www.github.com/Antrikshy/RecoverTabs/releases)
