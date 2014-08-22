@@ -4,17 +4,14 @@
 
 <script type='text/javascript'>
 // TODO:
-// Add option to open in foreground
-// Add option to change number of tabs
 // Store title data, create toolbar button
 // Can toolbar button be optional?
 
 // Place to store URLs of closed tabs
 var closedTabURLs = [];
-// Maximum number of closed tab URLs to keep in memory
-var maxClosedTabs = 30;
 // Gets setting values from extension preferences in Safari's Preferences (created in Extension Builder)
 var tabOpenStyle = safari.extension.settings.tabOpenStyle;
+var maxClosedTabs = safari.extension.settings.maxClosedTabs;
 
 // Event listens to close-tab signals from Safari and saves URL of target tab
 safari.application.addEventListener("close", function (e) {
@@ -25,9 +22,11 @@ safari.application.addEventListener("close", function (e) {
     if (e.target instanceof SafariBrowserTab && !(closedTabURLs.indexOf(toSaveURL) > -1) && toSaveURL !== "" && toSaveURL !== undefined)
         closedTabURLs.push(toSaveURL);
 
-    // Purges earliest tabs if saved number of tabs goes over maxClosedTabs (to prevent memory leaks in extended browsing sessions)
-    if (closedTabURLs.length > maxClosedTabs)
-        closedTabURLs.shift();
+    // Purges earliest tabs if saved number of tabs goes over maxClosedTabs (to prevent memory leaks in extended browsing sessions), if user has a limit defined
+    if (maxClosedTabs != -1) {
+        if (closedTabURLs.length > maxClosedTabs)
+            closedTabURLs.shift();
+    }
 }, true);
 
 // This does all the heavy-work of reopening
@@ -54,6 +53,18 @@ function handleKeyboardMessage(e) {
 function updateSettings(e) {
     if (e.key == 'tabOpenStyle')
         tabOpenStyle = e.newValue;
+
+    if (e.key == 'maxClosedTabs') {
+        maxClosedTabs = e.newValue;
+
+        // If new setting is anything other than infinite...
+        if (maxClosedTabs != -1) {
+            // ...remove excess URLs to match new max number of saved URLs
+            while (closedTabURLs.length > maxClosedTabs) {
+                closedTabURLs.shift();
+            }
+        }
+    }
 }
 
  

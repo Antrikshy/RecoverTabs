@@ -14,7 +14,7 @@
 		<key>Titles</key>
 		<array>
 			<string>background</string>
-			<string>foreground (slight lag when opening multiple)</string>
+			<string>foreground (slight lag when reopening multiple tabs)</string>
 		</array>
 		<key>TrueValue</key>
 		<string>foreground</string>
@@ -38,7 +38,7 @@
 		<key>StepValue</key>
 		<real>5</real>
 		<key>Title</key>
-		<string>Saved tab limit</string>
+		<string>Saved tabs limit</string>
 		<key>Titles</key>
 		<array>
 			<string>10</string>
@@ -51,9 +51,9 @@
 		<string>ListBox</string>
 		<key>Values</key>
 		<array>
-			<real>1</real>
-			<real>2</real>
-			<real>3</real>
+			<real>10</real>
+			<real>20</real>
+			<real>30</real>
 			<real>40</real>
 			<real>-1</real>
 		</array>
