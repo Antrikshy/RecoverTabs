@@ -1,7 +1,9 @@
 RecoverTabs
 ===========
 
-[![Flattr this git repo](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=Antrikshy&url=github.com/Antrikshy/RecoverTabs&title=RecoverTabs&language=English&tags=github&category=software)
+[![Flattr RecoverTabs](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=Antrikshy&url=github.com/Antrikshy/RecoverTabs&title=RecoverTabs&language=English&tags=github&category=software)
+
+Contact: [@Antrikshy](http://twitter.com/Antrikshy)
 
 The Safari extension you have always wished for!
 
@@ -31,6 +33,8 @@ Currently, the following improvements would be nice:
 Report Issues
 -------------
 If you run into any problems with this extension, write in the Issues for this repo (in the right sidebar) or [message /u/Antrikshy](http://www.reddit.com/message/compose/?to=Antrikshy) on reddit.
+
+You can also contact me [@Antrikshy](http://twitter.com/Antrikshy) for a quick reply.
 
 Changelog
 ---------
